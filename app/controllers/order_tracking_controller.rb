@@ -45,11 +45,11 @@ class OrderTrackingController < ApplicationController
 							"product": product_array
 		                 }}.to_json
 		                 puts "<===req body====#{body.inspect}====================>"
-				@result = HTTParty.post("http://sandbox.elogx.us/api/placeOrder.aspx?format=json", 
+				@result = HTTParty.post("http://sandbox.elogx.us/api/place-order.aspx?format=json",
 		        :body => body,
 		        :headers => { 'Content-Type' => 'application/json' } )
-		    	puts "<======result===r=#{@result.parsed_response["elogx-incoming"]["trackNo"]}==sym=#{@result.parsed_response.inspect}===s=#{@result.parsed_response["trackNo"]}==#{@result.parsed_response.class}=>"
-		    	track_no = @result.parsed_response["elogx-incoming"]["trackNo"]
+		    	puts "<======result===r=#{@result.parsed_response}==sym=#{@result.parsed_response.inspect}===s=#==#{@result.parsed_response.class}=>"
+		    	track_no = @result.parsed_response["elogx-order"]["refNo"]
 		    	order.update_attributes(note: "Tracking No : #{track_no}")
 		    end
 	    end
