@@ -45,7 +45,7 @@ class OrderTrackingController < ApplicationController
 							"product": product_array
 		                 }}.to_json
 		                 puts "<===req body====#{body.inspect}====================>"
-				@result = HTTParty.post("http://sandbox.elogx.us/api/incoming.aspx?format=json", 
+				@result = HTTParty.post("http://sandbox.elogx.us/api/placeOrder.aspx?format=json", 
 		        :body => body,
 		        :headers => { 'Content-Type' => 'application/json' } )
 		    	puts "<======result===r=#{@result.parsed_response["elogx-incoming"]["trackNo"]}==sym=#{@result.parsed_response.inspect}===s=#{@result.parsed_response["trackNo"]}==#{@result.parsed_response.class}=>"
