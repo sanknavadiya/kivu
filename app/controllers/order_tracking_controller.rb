@@ -13,17 +13,7 @@ class OrderTrackingController < ApplicationController
 					"barcode": variant.barcode,
 					"prodName": product.title,
 					"numItems": line_item["quantity"],
-					"costPerItem": variant.price,
-					"hsMainCategory": nil,
-					"hsSubCategory": nil,
-					"hsCode": nil,
-					"weight": variant.weight,
-					"width": "1.0",
-					"height": "1.0",
-					"length": "1.0",
-					"manufacturer": line_item["vendor"],
-					"model": "Model",
-					"color": "Color"
+					"costPerItem": variant.price
 					}
 				end
 			end
@@ -34,16 +24,11 @@ class OrderTrackingController < ApplicationController
 								"username": "npukuk@gmail.com",
 								"password": "Mb@nz@_u5a"
 							},
-							"inbound-shipment": {
-								"id": "",
-								"trackNo": "",
-								"carrier": "SHOPIFY",
-								"store": "Shopify"
-							},
 							"order": {
 								"refNo": order.id.to_s,
 								"invoiceNo": order.name,
-								"orderDate": order.created_at,
+								"orderDate": order.created_at.to_date.strftime("%Y-%m-%d"),
+								"company": order.shipping_address.company,
 								"instructions": "Shopify Order",
 								"delivery-address": {
 									"person": order.shipping_address.name.to_s,
