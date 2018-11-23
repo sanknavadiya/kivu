@@ -20,10 +20,15 @@ class OrderTrackingController < ApplicationController
 			if product_array.present?
 				body = { "elogx-order": {
 							"auth": {
-								"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
+								"guid": "A6605248-2356-43B8-BD5B-4BBF378D0DA7",
 								"username": "npukuk@gmail.com",
 								"password": "Mb@nz@_u5a"
 							},
+							# "auth": {
+							# 	"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
+							# 	"username": "npukuk@gmail.com",
+							# 	"password": "Mb@nz@_u5a"
+							# },
 							"order": {
 								"refNo": order.id.to_s,
 								"invoiceNo": order.name,
@@ -45,12 +50,16 @@ class OrderTrackingController < ApplicationController
 							"product": product_array
 		                 }}.to_json
 		                 puts "<===req body====#{body.inspect}====================>"
-				@result = HTTParty.post("http://sandbox.elogx.us/api/place-order.aspx?format=json",
+
+				# @result = HTTParty.post("http://sandbox.elogx.us/api/place-order.aspx?format=json",
+				@result = HTTParty.post("https://www.elogx.us/api/place-order.aspx?format=json",
 		        :body => body,
 		        :headers => { 'Content-Type' => 'application/json' } )
 		    	puts "<======result===r=#{@result.parsed_response}==sym=#{@result.parsed_response.inspect}===s=#==#{@result.parsed_response.class}=>"
 		    	track_no = @result.parsed_response["elogx-order"]["refNo"]
 		    	order.update_attributes(note: "Tracking No : #{track_no}")
+		    	
+		    	render json: {}, status: 200
 		    end
 	    end
 	end
