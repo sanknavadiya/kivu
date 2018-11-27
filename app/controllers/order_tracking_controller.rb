@@ -73,7 +73,7 @@ class OrderTrackingController < ApplicationController
 										"trackNo": []
 									}
 								}
-							}
+							}.to_json
                  	puts "<===req body===t=#{track_body.inspect}====================>"
 		    	@result_track = HTTParty.post("#{domain_name}/api/smart-track.aspx?format=json",
 		        :body => track_body,
