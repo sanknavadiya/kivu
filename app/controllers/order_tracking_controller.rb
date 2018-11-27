@@ -69,11 +69,12 @@ class OrderTrackingController < ApplicationController
 								"elogx-smart-track": {
 									"auth": auth_detail,
 									"filter": {
-										"refNo": [order.name.to_s],
+										"refNo": ["#{order.name.to_s}"],
 										"trackNo": []
 									}
 								}
 							}
+                 	puts "<===req body===t=#{track_body.inspect}====================>"
 		    	@result_track = HTTParty.post("#{domain_name}/api/smart-track.aspx?format=json",
 		        :body => track_body,
 		        :headers => { 'Content-Type' => 'application/json' } )
