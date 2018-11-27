@@ -3,6 +3,21 @@ class OrderTrackingController < ApplicationController
 	before_action :set_shop
 	def order_webhook
 		order = ShopifyAPI::Order.find(params[:id])
+
+		# live auth details
+		auth_detail = {
+			"guid": "A6605248-2356-43B8-BD5B-4BBF378D0DA7",
+			"username": "npukuk@gmail.com",
+			"password": "Mb@nz@_u5a"
+		}
+		domain_name = "https://www.elogx.us"
+		# sandbox auth details
+		# auth_detail = {
+		# 			"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
+		# 			"username": "npukuk@gmail.com",
+		# 			"password": "Mb@nz@_u5a"
+		# 		}
+		# domain_name = "http://sandbox.elogx.us"
 		unless order.note.include?("Tracking No")
 			product_array = []
 			params[:line_items].each do |line_item|
@@ -19,16 +34,7 @@ class OrderTrackingController < ApplicationController
 			end
 			if product_array.present?
 				body = { "elogx-order": {
-							"auth": {
-								"guid": "A6605248-2356-43B8-BD5B-4BBF378D0DA7",
-								"username": "npukuk@gmail.com",
-								"password": "Mb@nz@_u5a"
-							},
-							# "auth": {
-							# 	"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
-							# 	"username": "npukuk@gmail.com",
-							# 	"password": "Mb@nz@_u5a"
-							# },
+							"auth": auth_detail,
 							"order": {
 								"refNo": order.id.to_s,
 								"invoiceNo": order.name,
@@ -52,13 +58,26 @@ class OrderTrackingController < ApplicationController
 		                 puts "<===req body====#{body.inspect}====================>"
 
 				# @result = HTTParty.post("http://sandbox.elogx.us/api/place-order.aspx?format=json",
-				@result = HTTParty.post("https://www.elogx.us/api/place-order.aspx?format=json",
+				@result = HTTParty.post("#{domain_name}/api/place-order.aspx?format=json",
 		        :body => body,
 		        :headers => { 'Content-Type' => 'application/json' } )
 		    	puts "<======result===r=#{@result.parsed_response}==sym=#{@result.parsed_response.inspect}===s=#==#{@result.parsed_response.class}=>"
 		    	track_no = @result.parsed_response["elogx-order"]["refNo"]
 		    	order.update_attributes(note: "Tracking No : #{track_no}")
-		    	
+
+		    	track_body = {
+								"elogx-smart-track": {
+									"auth": auth_detail,
+									"filter": {
+										"refNo": [order.name.to_s],
+										"trackNo": []
+									}
+								}
+							}
+		    	@result_track = HTTParty.post("#{domain_name}/api/smart-track.aspx?format=json",
+		        :body => track_body,
+		        :headers => { 'Content-Type' => 'application/json' } )
+		    	puts "<=====t=result===r=#{@result_track.parsed_response}==sym=#{@result_track.parsed_response.inspect}====>"
 		    	render json: {}, status: 200
 		    end
 	    end
