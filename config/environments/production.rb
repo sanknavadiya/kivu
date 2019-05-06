@@ -92,13 +92,16 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => "sanket.drifttech@gmail.com",
-    :password             => "sanket@drifttech123",
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    address: "smtp.mandrillapp.com",
+    authentication: :login,
+    enable_starttls_auto: true,
+    password: "ADu1Ipdj5KBbyPbDkYAE8Q",
+    port: "587",
+    user_name: "Kivu noir coffee",
+    openssl_verify_mode: 'none'
   }
   config.action_mailer.default_url_options = { host: "https://kivunoirapi.com" }
 end

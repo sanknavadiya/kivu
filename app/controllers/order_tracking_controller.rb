@@ -64,7 +64,7 @@ class OrderTrackingController < ApplicationController
 		        :headers => { 'Content-Type' => 'application/json' } )
 		    	puts "<======result===r=#{@result.parsed_response}==sym=#{@result.parsed_response.inspect}===s=#==#{@result.parsed_response.class}=>"
 		    	track_no = @result.parsed_response["elogx-order"]["refNo"]
-		    	order.update_attributes(note: "Tracking No : #{track_no}")
+		    	# order.update_attributes(note: "Tracking No : #{track_no}")
 
 		    	track_body = {
 								"elogx-smart-track": {
