@@ -24,14 +24,14 @@ class OrderTrackingController < ApplicationController
 			params[:line_items].each do |line_item|
 				product = ShopifyAPI::Product.find(line_item["product_id"])
 				variant = ShopifyAPI::Variant.find(line_item["variant_id"])
-				if product.tags.include?("elogX order")
+				# if product.tags.include?("elogX order")
 					product_array << {
 					"barcode": variant.barcode,
 					"prodName": product.title,
 					"numItems": line_item["quantity"],
 					"costPerItem": variant.price
 					}
-				end
+				# end
 			end
 			if product_array.present?
 				body = { "elogx-order": {
