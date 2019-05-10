@@ -86,13 +86,14 @@ class OrderTrackingController < ApplicationController
 	end
 
 	def track_order
+		puts "<======-=#{params["elogx-inventory"]["shipment"]["refTxt"]}=======-=#{params["elogx-inventory"]["shipment"]["trackNo"]}====>"
 		begin
-			order = ShopifyAPI::Order.find(params[:refNo]) rescue nil
-			if order.present? && params[:tracking_no].present?
-				order.update_attributes(note: "Tracking No : #{params[:tracking_no]}")
+			order = ShopifyAPI::Order.find(params["elogx-inventory"]["shipment"]["refTxt"]) rescue nil
+			if order.present? && params["elogx-inventory"]["shipment"]["trackNo"].present?
+				order.update_attributes(note: "Tracking No : #{params["elogx-inventory"]["shipment"]["trackNo"]}")
 				customer_email = order.email.present? ? order.email : ""
 				customer_email = order.customer.email.present? ? order.customer.email : "" unless customer_email.present?
-				TrackingMailer.track_order(params[:tracking_no],customer_email,order.id).deliver_now! if customer_email.present?
+				TrackingMailer.track_order(params["elogx-inventory"]["shipment"]["trackNo"],customer_email,order.id).deliver_now! if customer_email.present?
         response = {message: "order updated successfully", status: 200}
 			else
         response = {errors: "please pass valid details", status: 422}
