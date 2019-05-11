@@ -6,19 +6,19 @@ class OrderTrackingController < ApplicationController
 		order = ShopifyAPI::Order.find(params[:id])
 
 		# live auth details
-		# auth_detail = {
-		# 	"guid": "A6605248-2356-43B8-BD5B-4BBF378D0DA7",
-		# 	"username": "npukuk@gmail.com",
-		# 	"password": "Mb@nz@_u5a"
-		# }
-		# domain_name = "https://www.elogx.us"
-		# sandbox auth details
 		auth_detail = {
-					"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
-					"username": "npukuk@gmail.com",
-					"password": "Mb@nz@_u5a"
-				}
-		domain_name = "http://sandbox.elogx.us"
+			"guid": "A6605248-2356-43B8-BD5B-4BBF378D0DA7",
+			"username": "npukuk@gmail.com",
+			"password": "Mb@nz@_u5a"
+		}
+		domain_name = "https://www.elogx.us"
+		# sandbox auth details
+		# auth_detail = {
+		# 			"guid": "319b416d-100c-4f89-af4f-01f2925a1572",
+		# 			"username": "npukuk@gmail.com",
+		# 			"password": "Mb@nz@_u5a"
+		# 		}
+		# domain_name = "http://sandbox.elogx.us"
 		unless order.note.include?("Tracking No")
 			product_array = []
 			params[:line_items].each do |line_item|

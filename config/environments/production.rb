@@ -98,9 +98,9 @@ Rails.application.configure do
     address: "smtp.mandrillapp.com",
     authentication: :login,
     enable_starttls_auto: true,
-    password: "ADu1Ipdj5KBbyPbDkYAE8Q",
+    password: "7MsoKA0wVHApAOFK26oXPw",
     port: "587",
-    user_name: "Kivu noir coffee",
+    user_name: "Kivu Noir Coffee",
     openssl_verify_mode: 'none'
   }
   config.action_mailer.default_url_options = { host: "https://kivunoirapi.com" }
