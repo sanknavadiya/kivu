@@ -87,7 +87,6 @@ class OrderTrackingController < ApplicationController
 
 	def track_order
 		begin
-		puts "<======-=#{params["elogx-inventory"]["shipment"]["refTxt"]}=======-=#{params["elogx-inventory"]["shipment"]["trackNo"]}====>"
 			order = ShopifyAPI::Order.find(params["elogx-inventory"]["shipment"]["refTxt"]) rescue nil
 			if order.present? && params["elogx-inventory"]["shipment"]["trackNo"].present?
 				order.update_attributes(note: "Tracking No : #{params["elogx-inventory"]["shipment"]["trackNo"]}")
