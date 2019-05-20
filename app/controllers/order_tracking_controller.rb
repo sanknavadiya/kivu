@@ -108,11 +108,9 @@ class OrderTrackingController < ApplicationController
 	def home
 		# order = ShopifyAPI::Order.create(line_items:[{"variant_id": 13196264669237,"quantity": 1}])
 
-		puts "<===#{ShopifyAPI::Product.find(1516175753269).variants.first.id}========>"
 	end
 	def set_shop
-		# shop_url = "https://daba4fc3c0451ffaa10e613dc73afa6f:cef5a0b6f6995e6b25fa9f0b936e3feb@kivu-noir.myshopify.com/admin"
-		shop_url = "https://3add801e151495a16721c6d2ab5284bf:d7b08286ec4608207541848880b0b271@cibler.myshopify.com/admin/api/2019-04"
+		shop_url = "https://daba4fc3c0451ffaa10e613dc73afa6f:cef5a0b6f6995e6b25fa9f0b936e3feb@kivu-noir.myshopify.com/admin"
 		ShopifyAPI::Base.site = shop_url	
 	end
 end
